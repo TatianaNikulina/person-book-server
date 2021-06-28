@@ -21,6 +21,7 @@ db.sequelize.sync();
 authRoutes(app)
 
 require('./routes/user.routes')(app);
+require('./routes/album.routes')(app);
 
 app.get("/", (req, res) => {
     res.json({ message: "Good morning!" });
