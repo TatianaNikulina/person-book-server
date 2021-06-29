@@ -1,8 +1,8 @@
 module.exports = {
-    HOST: '127.0.0.1',
-    PORT: '8889',
+    HOST: 'localhost',
+    // PORT: '8889',
     USER: 'root',
-    PASSWORD: 'root',
+    PASSWORD: '',
     DB: 'profile_app',
     dialect: 'mysql',
     pool: {
