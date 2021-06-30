@@ -22,6 +22,8 @@ authRoutes(app)
 
 require('./routes/user.routes')(app);
 require('./routes/album.routes')(app);
+require('./routes/photo.routes')(app);
+require('./routes/post.routes')(app);
 
 app.get("/", (req, res) => {
     res.json({ message: "Good morning!" });

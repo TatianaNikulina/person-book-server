@@ -1,12 +1,12 @@
 const db = require("../models");
-const Album = db.albums;
+const Post = db.posts;
 
 exports.create = (req, res) => {
-  Album.create({
+  Post.create({
     ...req.body,
   })
-    .then((album) => {
-      res.send(album);
+    .then((post) => {
+      res.send(post);
     })
     .catch((err) => {
       res.status(500).send({
@@ -16,84 +16,84 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Album.findAll()
+  Post.findAll()
     .then((data) => res.send(data))
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving albums",
+        message: err.message || "Some error occurred while retrieving posts",
       });
     });
 };
 
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Album.findByPk(id)
+  Post.findByPk(id)
     .then((data) => {
       if (!data) {
         res.status(404).send({
-          message: `Album with id=${id} not found`,
+          message: `Post with id=${id} not found`,
         });
       }
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving Album with id = " + id,
+        message: err.message || "Error retrieving Post with id = " + id,
       });
     });
 };
 
 exports.update = (req, res) => {
   const id = req.params.id;
-  Album.update(req.body, {
+  Post.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
-        Album.findByPk(id)
+        Post.findByPk(id)
           .then((data) => {
             if (!data) {
               res.status(404).send({
-                message: `Album with id=${id} not found`,
+                message: `Post with id=${id} not found`,
               });
             }
             res.send(data);
           })
           .catch((err) => {
             res.status(500).send({
-              message: err.message || "Error retrieving Album with id = " + id,
+              message: err.message || "Error retrieving Post with id = " + id,
             });
           });
       } else {
         res.status(404).send({
-          message: `Cannot update Album info with id=${id}.`,
+          message: `Cannot update Post info with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating Album info with id = " + id,
+        message: err.message || "Error updating Post info with id = " + id,
       });
     });
 };
 
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Album.destroy({
+  Post.destroy({
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
-        res.send({ message: "Album was successfully deleted" });
+        res.send({ message: "Post was successfully deleted" });
       } else {
         res.send({
-          message: `Cannot delete Album with id=${id}.`,
+          message: `Cannot delete Post with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error deleting Album with id = " + id,
+        message: err.message || "Error deleting Post with id = " + id,
       });
     });
 };
@@ -101,7 +101,7 @@ exports.delete = (req, res) => {
 exports.findAllByPersonId = (req, res) => {
   const personId = req.params.id;
 
-  Album.findAll({ where: { person_id: personId } })
+  Post.findAll({ where: { person_id: personId } })
     .then((data) => res.send(data))
     .catch((err) => {
       res
